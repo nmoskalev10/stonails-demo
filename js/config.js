@@ -15,8 +15,15 @@
 */
 
 const SUPABASE_CONFIG = {
-  url: "",
-  anonKey: ""
+  url: "https://nrgcwrpphnixafodeaxl.supabase.co",
+  anonKey: "sb_publishable_lLfp7Duls5n5h61OGXrqWw_BMaqb1_U",
+
+  // Адреса, где настроена подмена /img/* на хранилище (правило в vercel.json).
+  // Там фотографии идут через CDN и не тратят трафик базы. На остальных
+  // площадках — например на GitHub Pages — такого правила нет, поэтому файлы
+  // запрашиваются из хранилища напрямую. Добавьте сюда свой домен, когда
+  // подключите его к Vercel.
+  imageProxyHosts: ["vercel.app"]
 };
 
 if (typeof module !== "undefined" && module.exports) module.exports = SUPABASE_CONFIG;

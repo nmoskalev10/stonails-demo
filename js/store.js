@@ -226,10 +226,13 @@ const Store = (function () {
     if (!src) return "";
     if (/^https?:\/\//.test(src) || src.startsWith("assets/") || src.startsWith("data:")) return src;
 
-    const local = ["localhost", "127.0.0.1"].includes(location.hostname);
-    return local && configured
-      ? `${cfg.url.replace(/\/$/, "")}/storage/v1/object/public/media/${src}`
-      : `/img/${src}`;
+    // Через /img/* — только там, где эта подмена настроена (см. config.js).
+    // Иначе тянем файл прямо из хранилища, иначе получили бы 404.
+    const hosts = cfg.imageProxyHosts || [];
+    const viaProxy = hosts.some((h) => location.hostname === h || location.hostname.endsWith("." + h));
+
+    if (viaProxy) return `/img/${src}`;
+    return configured ? `${cfg.url.replace(/\/$/, "")}/storage/v1/object/public/media/${src}` : src;
   }
 
   return {
