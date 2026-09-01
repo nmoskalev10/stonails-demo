@@ -1,17 +1,23 @@
 :root {
-  --pink: #ff6f9c;
-  --pink-dark: #e14a78;
-  --pink-soft: #fdeaf1;
-  --pink-line: #f6d3e0;
-  --ink: #1e141a;
-  --ink-soft: #7d6d75;
-  --dark: #170f13;
+  /* Та же дофаминовая палитра, что и на сайте (css/style.css) */
+  --sky: #24b6f0;
+  --sky-deep: #0b7fbd;
+  --sky-soft: #e8f7fe;
+  --mint: #21c98d;
+  --mint-deep: #07805a;
+  --mint-soft: #e6faf1;
+  --sun-soft: #fff6dd;
+  --line: #d7ecf7;
+  --ink: #10222e;
+  --ink-soft: #5b7482;
+  --dark: #08222f;
+  --dark-2: #103c52;
   --white: #fff;
-  --bg: #faf7f8;
+  --bg: #f6fbfe;
   --radius: 16px;
   --radius-sm: 10px;
   --font: "Manrope", system-ui, sans-serif;
-  --shadow: 0 10px 30px -20px rgba(30, 20, 26, .5);
+  --shadow: 0 10px 30px -20px rgba(16, 60, 82, .55);
 }
 
 * { box-sizing: border-box; }
@@ -45,18 +51,18 @@ h1, h2, h3 { margin: 0 0 .5em; line-height: 1.25; }
 .btn:hover { transform: translateY(-1px); }
 .btn:disabled { opacity: .5; cursor: default; transform: none; }
 
-.btn-primary { background: var(--dark); color: var(--white); }
-.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--pink-line); }
-.btn-ghost:hover { background: var(--pink-soft); }
+.btn-primary { background: linear-gradient(120deg, var(--sky-deep), var(--mint-deep)); color: var(--white); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn-ghost:hover { background: var(--sky-soft); }
 
 .btn-small { padding: 7px 14px; font-size: .8rem; }
 .btn-danger { background: transparent; color: #c0392b; border: 1px solid #f0c8c2; }
 .btn-danger:hover { background: #fdf0ee; }
 
 .btn-add {
-  background: var(--pink-soft);
-  color: var(--pink-dark);
-  border: 1px dashed var(--pink);
+  background: var(--mint-soft);
+  color: var(--mint-deep);
+  border: 1px dashed var(--mint);
   width: 100%;
   margin-top: 10px;
 }
@@ -67,7 +73,7 @@ h1, h2, h3 { margin: 0 0 .5em; line-height: 1.25; }
   display: grid;
   place-items: center;
   padding: 24px;
-  background: radial-gradient(120% 100% at 50% 0%, #3a1a26, var(--dark));
+  background: radial-gradient(120% 100% at 50% 0%, var(--dark-2), var(--dark));
 }
 .login-card {
   width: min(400px, 100%);
@@ -95,7 +101,7 @@ input[type="text"], input[type="email"], input[type="password"], textarea, selec
   width: 100%;
   padding: 11px 14px;
   margin-top: 5px;
-  border: 1px solid var(--pink-line);
+  border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   font: inherit;
   font-size: .92rem;
@@ -104,8 +110,8 @@ input[type="text"], input[type="email"], input[type="password"], textarea, selec
 }
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: var(--pink);
-  box-shadow: 0 0 0 3px rgba(255, 111, 156, .15);
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px rgba(36, 182, 240, .18);
 }
 textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
 
@@ -127,13 +133,13 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
   flex-wrap: wrap;
   padding: 14px 22px;
   background: var(--white);
-  border-bottom: 1px solid var(--pink-line);
+  border-bottom: 1px solid var(--line);
 }
 .topbar-brand { font-weight: 800; letter-spacing: .02em; }
 .topbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
 .status { font-size: .82rem; color: var(--ink-soft); }
-.status.dirty { color: var(--pink-dark); font-weight: 700; }
+.status.dirty { color: var(--sky-deep); font-weight: 700; }
 
 .tabs {
   position: sticky;
@@ -144,7 +150,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
   overflow-x: auto;
   padding: 12px 22px;
   background: var(--bg);
-  border-bottom: 1px solid var(--pink-line);
+  border-bottom: 1px solid var(--line);
 }
 .tab {
   padding: 9px 18px;
@@ -158,8 +164,8 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
   cursor: pointer;
   white-space: nowrap;
 }
-.tab:hover { background: var(--pink-soft); }
-.tab.active { background: var(--dark); color: var(--white); }
+.tab:hover { background: var(--sky-soft); }
+.tab.active { background: linear-gradient(120deg, var(--sky-deep), var(--mint-deep)); color: var(--white); }
 
 .panel {
   max-width: 900px;
@@ -170,7 +176,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
 /* ---------- Cards ---------- */
 .card {
   background: var(--white);
-  border: 1px solid var(--pink-line);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 22px;
   margin-bottom: 18px;
@@ -180,7 +186,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
 
 .sub {
   background: var(--bg);
-  border: 1px solid var(--pink-line);
+  border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   padding: 16px;
   margin-bottom: 12px;
@@ -199,7 +205,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
 .icon-btn {
   width: 30px;
   height: 30px;
-  border: 1px solid var(--pink-line);
+  border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--white);
   cursor: pointer;
@@ -207,7 +213,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
   line-height: 1;
   color: var(--ink-soft);
 }
-.icon-btn:hover { background: var(--pink-soft); color: var(--pink-dark); }
+.icon-btn:hover { background: var(--sky-soft); color: var(--sky-deep); }
 .icon-btn.danger:hover { background: #fdf0ee; color: #c0392b; border-color: #f0c8c2; }
 
 /* Строка списка: поле + кнопки */
@@ -226,7 +232,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
   aspect-ratio: 3 / 4;
   border-radius: var(--radius-sm);
   overflow: hidden;
-  background: var(--pink-soft);
+  background: var(--sky-soft);
 }
 .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .photo button {
@@ -246,14 +252,14 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
 .dropzone {
   margin-top: 10px;
   padding: 18px;
-  border: 2px dashed var(--pink-line);
+  border: 2px dashed var(--line);
   border-radius: var(--radius-sm);
   text-align: center;
   color: var(--ink-soft);
   font-size: .85rem;
   cursor: pointer;
 }
-.dropzone:hover, .dropzone.over { border-color: var(--pink); background: var(--pink-soft); }
+.dropzone:hover, .dropzone.over { border-color: var(--sky); background: var(--sky-soft); }
 .dropzone input { display: none; }
 
 /* ---------- History ---------- */
@@ -263,7 +269,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
   justify-content: space-between;
   gap: 12px;
   padding: 12px 14px;
-  border: 1px solid var(--pink-line);
+  border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   margin-bottom: 8px;
   background: var(--white);
