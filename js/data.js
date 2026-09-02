@@ -472,28 +472,34 @@ const SITE_DATA = {
           ]
         },
         {
-          caption: "Начинается первая отработка на модели — учимся работать с руками клиента и строить тонкую прочную архитектуру на форме овал",
+          caption: "Начинается первая отработка на модели: учимся понимать, как работать с руками клиента, работаем в бортовой технике и создаём тонкую и прочную архитектуру на овале",
           images: [
             "assets/cases/base-day2-3.jpg",
             "assets/cases/base-day2-4.jpg",
             "assets/cases/base-day2-5.jpg",
-            "assets/cases/base-day2-6.jpg"
+            "assets/cases/base-day2-6.jpg",
+            "assets/cases/base-day2-7.jpg",
+            "assets/cases/base-day2-8.jpg",
+            "assets/cases/base-day2-9.jpg",
+            "assets/cases/base-day2-10.jpg"
           ]
         },
         {
           label: "Третий день",
-          caption: "Отработка на второй модели — учимся снимать старое покрытие и выполнять опил формы квадрат",
+          caption: "Отработка на второй модели: учимся делать снятие старого покрытия, работаем с полигелем и опиливаем квадрат",
           images: [
             "assets/cases/base-day3-1.jpg",
             "assets/cases/base-day3-2.jpg"
           ]
         },
         {
-          caption: "Работаем с полигелем: снятие старого покрытия и опил квадрата на модели",
+          caption: "Работаем с полигелем, учимся пилить квадраты и делать снятие",
           images: [
             "assets/cases/base-day3-3.jpg",
             "assets/cases/base-day3-4.jpg",
-            "assets/cases/base-day3-5.jpg"
+            "assets/cases/base-day3-5.jpg",
+            "assets/cases/base-day3-6.jpg",
+            "assets/cases/base-day3-7.jpg"
           ]
         },
         {
