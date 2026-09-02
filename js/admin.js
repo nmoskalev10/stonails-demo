@@ -629,9 +629,13 @@
 
   /* ---------- запуск ---------- */
 
-  async function start() {
+  async function start(keepState) {
     $("login").hidden = true;
     $("app").hidden = false;
+
+    // Вернулись после повторного входа с несохранёнными правками — оставляем их
+    // как есть, иначе свежие данные из базы затрут работу.
+    if (keepState) return renderPanel();
 
     // Берём контент из базы; если её ещё нет — стартуем со снимка в файле
     try {
@@ -658,6 +662,14 @@
   document.addEventListener("DOMContentLoaded", () => {
     bindPanelEvents();
 
+    // Обычно сессия продлевается сама. Если продлить не вышло — просим войти
+    // заново прямо поверх админки: правки остаются в памяти и не пропадают.
+    Store.onSessionEnd(() => {
+      toast("Сессия закончилась. Войдите заново — несохранённые правки останутся", true);
+      $("login-password").value = "";
+      $("login").hidden = false;
+    });
+
     if (!Store.configured) {
       $("login-hint").textContent =
         "База пока не подключена. Можно войти без пароля и посмотреть админку — но сохранять будет некуда.";
@@ -672,7 +684,7 @@
 
       try {
         await Store.signIn($("login-email").value.trim(), $("login-password").value);
-        start();
+        start(dirty);
       } catch (ex) {
         err.textContent = ex.status === 400
           ? "Неверная почта или пароль"
