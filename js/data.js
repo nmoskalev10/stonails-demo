@@ -470,6 +470,35 @@ const SITE_DATA = {
             "assets/cases/base-day2-1.jpg",
             "assets/cases/base-day2-2.jpg"
           ]
+        },
+        {
+          caption: "Начинается первая отработка на модели — учимся работать с руками клиента и строить тонкую прочную архитектуру на форме овал",
+          images: [
+            "assets/cases/base-day2-3.jpg",
+            "assets/cases/base-day2-4.jpg",
+            "assets/cases/base-day2-5.jpg",
+            "assets/cases/base-day2-6.jpg"
+          ]
+        },
+        {
+          label: "Третий день",
+          caption: "Отработка на второй модели — учимся снимать старое покрытие и выполнять опил формы квадрат",
+          images: [
+            "assets/cases/base-day3-1.jpg",
+            "assets/cases/base-day3-2.jpg"
+          ]
+        },
+        {
+          caption: "Работаем с полигелем: снятие старого покрытия и опил квадрата на модели",
+          images: [
+            "assets/cases/base-day3-3.jpg",
+            "assets/cases/base-day3-4.jpg",
+            "assets/cases/base-day3-5.jpg"
+          ]
+        },
+        {
+          caption: "Курс пройден — сертификат о прохождении «Базового курса»",
+          images: ["assets/cases/base-certificate.jpg"]
         }
       ]
     },
