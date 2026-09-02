@@ -22,6 +22,12 @@
 
 * { box-sizing: border-box; }
 
+/* Экран входа и рабочий экран прячутся атрибутом hidden. Браузерное правило
+   [hidden] { display: none } слабее любого авторского — а у .login задан
+   display: grid, из-за чего после входа форма оставалась поверх админки.
+   Возвращаем атрибуту силу явным правилом. */
+[hidden] { display: none !important; }
+
 body {
   margin: 0;
   font-family: var(--font);
