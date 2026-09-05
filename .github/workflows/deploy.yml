@@ -1,0 +1,68 @@
+# Публикация сайта на хостинг reg.ru.
+#
+# Срабатывает на каждое изменение в main: забирает файлы репозитория и
+# заливает их по FTP в корень сайта. Пока доступы не заданы — тихо пропускает,
+# чтобы не сыпать письмами о неудачных запусках.
+#
+# Нужные секреты (Settings → Secrets and variables → Actions → New secret):
+#   FTP_HOST      адрес FTP-сервера из панели reg.ru
+#   FTP_USER      логин FTP
+#   FTP_PASSWORD  пароль FTP
+#   FTP_DIR       папка сайта на сервере, например /www/stonails.ru
+
+name: Публикация на хостинг
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # и вручную, кнопкой на вкладке Actions
+
+concurrency:
+  group: deploy-hosting     # две заливки разом сайту не нужны
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Проверить, заданы ли доступы
+        id: check
+        run: echo "ready=${{ secrets.FTP_HOST != '' }}" >> "$GITHUB_OUTPUT"
+
+      - name: Доступы ещё не добавлены
+        if: steps.check.outputs.ready != 'true'
+        run: echo "::notice::Секреты FTP не заданы — публикация пропущена."
+
+      - name: Установить lftp
+        if: steps.check.outputs.ready == 'true'
+        run: sudo apt-get update -qq && sudo apt-get install -y lftp
+
+      # mirror сравнивает размер и время и пропускает несменившееся. При этом
+      # checkout выдаёт всем файлам свежее время, поэтому первый заход после
+      # каждого коммита перезальёт весь сайт — это около 8 МБ, полминуты.
+      - name: Залить файлы
+        if: steps.check.outputs.ready == 'true'
+        env:
+          # Пароль уходит в lftp через окружение, а не аргументом командной
+          # строки — так он не виден в списке процессов сборщика.
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_DIR: ${{ secrets.FTP_DIR }}
+        run: |
+          lftp --env-password -u "$FTP_USER" "$FTP_HOST" <<EOF
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate no
+          set net:max-retries 3
+          set net:timeout 20
+          mirror --reverse --verbose --parallel=4 \
+            --exclude-glob .git/ \
+            --exclude-glob .github/ \
+            --exclude-glob .nojekyll \
+            --exclude-glob README.md \
+            ./ "$FTP_DIR"
+          bye
+          EOF
