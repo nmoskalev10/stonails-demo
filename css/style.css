@@ -1,49 +1,63 @@
 :root {
-  /* Палитра «Полевые цветы» — собрана по подборке Даши.
-     Пастель не держит белый текст: у её цветов контраст с белым 1.1–2.5 при
-     норме 4.5. Поэтому у каждого тона есть глубокий вариант, затемнённый
-     ровно настолько, чтобы белая надпись читалась. Светлые идут в заливки,
-     глубокие — туда, где на цвете лежит текст. */
+  /* Тема по умолчанию — «Дофаминовая», та же, что и была.
+     Значения ниже переопределяются из js/themes.js, когда в админке выбрана
+     другая тема. Кроме самих цветов темы задают и структурные вещи: шапка
+     бывает светлой и тёмной, кнопка — сплошной и с переходом. Поэтому такие
+     места тоже вынесены в токены, иначе при смене темы шапка осталась бы от
+     старой палитры. */
 
-  /* Основной — пыльно-голубой #ADBACB */
-  --primary: #adbacb;
-  --primary-deep: #5e7695;
-  --primary-soft: #eef1f6;
-  --primary-line: #d3dce6;
+  --primary: #24b6f0;
+  --primary-deep: #0b7fbd;
+  --primary-soft: #e8f7fe;
+  --primary-line: #bfe6f8;
 
-  /* Второй — оливковый #A1AC4E */
-  --second: #a1ac4e;
-  --second-deep: #6f7736;
-  --second-soft: #f1f3e3;
-  --second-line: #dce1c0;
+  --second: #21c98d;
+  --second-deep: #07805a;
+  --second-soft: #e6faf1;
+  --second-line: #bfead8;
 
-  /* Тёплый — жёлтый #EEC474 */
-  --warm: #eec474;
-  --warm-deep: #96690f;
-  --warm-soft: #fdf5e6;
-  --warm-line: #f2e0bb;
+  --warm: #ffcc33;
+  --warm-deep: #a86b00;
+  --warm-soft: #fff6dd;
+  --warm-line: #f6e4ae;
 
-  /* Акцент — пыльная роза #E5A39D, по минимуму */
-  --accent: #e5a39d;
-  --accent-deep: #c0453a;
+  --accent: #ff5fa2;
+  --accent-deep: #c9316f;
 
   --white: #ffffff;
-  --page: #f9faec;          /* сливочный #F6F8DB, осветлённый под фон страницы */
-  --surface: #ffffff;
-  --line: #e0e4cf;
-  --ink: #2f3328;
-  --ink-soft: #6d7263;
-  --dark: #333a29;
-  --dark-2: #4c5639;
+  --page: #ffffff;
+  --surface: #f4fbff;
+  --line: #d7ecf7;
+  --ink: #10222e;
+  --ink-soft: #5b7482;
+  --dark: #08222f;
+  --dark-2: #103c52;
+
+  /* Структура темы */
+  --hero-bg: linear-gradient(165deg, var(--dark-2), var(--dark) 60%);
+  --hero-ink: var(--white);
+  --hero-ink-soft: #c7e9f7;
+  --hero-mark: var(--warm);
+  --hero-glow-1: rgba(36, 182, 240, .55);
+  --hero-glow-2: rgba(33, 201, 141, .42);
+  --btn-bg: linear-gradient(120deg, var(--primary-deep), var(--second-deep));
+  --cta-bg: var(--warm);
+  --cta-ink: var(--ink);
+  --label-bg: linear-gradient(120deg, var(--second-deep), var(--primary-deep));
+  --avatar-bg: linear-gradient(135deg, var(--primary), var(--second));
+  --cases-bg: linear-gradient(180deg, var(--primary-soft), var(--second-soft));
+  --chrome-bg: rgba(255, 255, 255, .82);
+  --overlay: rgba(8, 34, 47, .93);
+  --footer-ink: #a9cfe0;
 
   --radius-lg: 26px;
   --radius-md: 18px;
   --radius-sm: 12px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 4px 14px -8px rgba(47, 51, 40, .3);
-  --shadow-md: 0 18px 40px -24px rgba(47, 51, 40, .45);
-  --shadow-lg: 0 30px 60px -30px rgba(94, 118, 149, .5);
+  --shadow-sm: 0 4px 14px -8px rgba(16, 60, 82, .28);
+  --shadow-md: 0 18px 40px -24px rgba(16, 60, 82, .42);
+  --shadow-lg: 0 30px 60px -30px rgba(11, 127, 189, .5);
 
   --font-head: "Unbounded", "Nunito", system-ui, sans-serif;
   --font-body: "Manrope", "Nunito", system-ui, sans-serif;
@@ -51,7 +65,6 @@
   --ease: cubic-bezier(.22, .68, .34, 1);
   --gutter: 22px;
 }
-
 
 * { box-sizing: border-box; }
 
@@ -143,7 +156,7 @@ img { max-width: 100%; display: block; }
 .btn > * { position: relative; z-index: 1; }
 
 .btn-dark {
-  background: var(--primary-deep);
+  background: var(--btn-bg);
   color: var(--white);
   box-shadow: var(--shadow-sm);
 }
@@ -167,9 +180,8 @@ img { max-width: 100%; display: block; }
 .btn-dark:active { transform: translateY(-1px); }
 
 .btn-light {
-  background: var(--warm);
-  color: var(--ink);
-  box-shadow: 0 10px 24px -14px rgba(150, 105, 15, .8);
+  background: var(--cta-bg);
+  color: var(--cta-ink);
   box-shadow: var(--shadow-sm);
 }
 .btn-light:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
@@ -186,8 +198,8 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
   text-align: center;
   padding: clamp(90px, 16vh, 150px) var(--gutter) clamp(70px, 12vh, 110px);
-  background: linear-gradient(170deg, var(--primary-soft), var(--page) 48%, var(--warm-soft));
-  color: var(--ink);
+  background: var(--hero-bg);
+  color: var(--hero-ink);
 }
 /* Slow drifting glow blobs */
 .hero::before,
@@ -202,14 +214,14 @@ img { max-width: 100%; display: block; }
   width: 60vw; height: 60vw;
   max-width: 620px; max-height: 620px;
   left: -12%; bottom: -28%;
-  background: rgba(229, 163, 157, .45);
+  background: var(--hero-glow-1);
   animation: drift-a 18s ease-in-out infinite alternate;
 }
 .hero::after {
   width: 46vw; height: 46vw;
   max-width: 480px; max-height: 480px;
   right: -10%; top: -22%;
-  background: rgba(173, 186, 203, .55);
+  background: var(--hero-glow-2);
   animation: drift-b 22s ease-in-out infinite alternate;
 }
 @keyframes drift-a {
@@ -248,7 +260,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: .32em;
   font-size: .72rem;
   font-weight: 700;
-  color: var(--second-deep);
+  color: var(--hero-mark);
   margin: 0 0 18px;
 }
 .hero-title {
@@ -259,7 +271,7 @@ img { max-width: 100%; display: block; }
 }
 .hero-tagline {
   font-size: clamp(1rem, 2.4vw, 1.2rem);
-  color: var(--ink-soft);
+  color: var(--hero-ink-soft);
   max-width: 480px;
   margin: 0 auto 38px;
 }
@@ -270,8 +282,8 @@ img { max-width: 100%; display: block; }
   width: 26px;
   height: 26px;
   margin: 54px auto 0;
-  border-right: 2px solid var(--second-deep);
-  border-bottom: 2px solid var(--second-deep);
+  border-right: 2px solid var(--hero-mark);
+  border-bottom: 2px solid var(--hero-mark);
   transform: rotate(45deg);
   animation: hero-in .9s var(--ease) .62s forwards, nudge 2s ease-in-out 1.5s infinite;
 }
@@ -291,7 +303,7 @@ img { max-width: 100%; display: block; }
   height: 118px;
   border-radius: 50%;
   margin: 0 auto 26px;
-  background: linear-gradient(135deg, var(--accent), var(--second));
+  background: var(--avatar-bg);
   display: grid;
   place-items: center;
   font-size: 2.3rem;
@@ -380,7 +392,7 @@ img { max-width: 100%; display: block; }
   display: flex;
   justify-content: center;
   padding: 16px var(--gutter);
-  background: rgba(249, 250, 236, .85);
+  background: var(--chrome-bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid transparent;
@@ -388,7 +400,7 @@ img { max-width: 100%; display: block; }
 }
 .tabs-nav.is-stuck {
   border-bottom-color: var(--line);
-  box-shadow: 0 6px 24px -18px rgba(47, 51, 40, .5);
+  box-shadow: 0 6px 24px -18px rgba(16, 60, 82, .55);
 }
 
 /* Sliding pill indicator */
@@ -413,7 +425,7 @@ img { max-width: 100%; display: block; }
   left: 5px;
   width: calc((100% - 10px) / var(--tabs-count));
   height: calc(100% - 10px);
-  background: var(--primary-deep);
+  background: var(--btn-bg);
   border-radius: var(--radius-pill);
   transform: translateX(calc(var(--tabs-index) * 100%));
   transition: transform .45s var(--ease);
@@ -689,7 +701,7 @@ img { max-width: 100%; display: block; }
 
 /* ============ Cases ============ */
 .cases-section {
-  background: linear-gradient(180deg, var(--warm-soft), var(--second-soft));
+  background: var(--cases-bg);
   padding: clamp(60px, 10vw, 96px) 0;
 }
 
@@ -707,7 +719,7 @@ img { max-width: 100%; display: block; }
   display: block;
   width: fit-content;
   margin: 0 auto 26px;
-  background: var(--second-deep);
+  background: var(--label-bg);
   color: var(--white);
   font-family: var(--font-body);
   font-size: .74rem;
@@ -822,7 +834,7 @@ img { max-width: 100%; display: block; }
   display: grid;
   place-items: center;
   padding: 24px;
-  background: rgba(38, 43, 32, .94);
+  background: var(--overlay);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   opacity: 0;
@@ -838,7 +850,7 @@ img { max-width: 100%; display: block; }
   border-radius: var(--radius-md);
   transform: scale(.94);
   transition: transform .4s var(--ease);
-  box-shadow: 0 40px 80px -30px rgba(38, 43, 32, .8);
+  box-shadow: 0 40px 80px -30px rgba(8, 34, 47, .85);
 }
 .lightbox.is-open img { transform: scale(1); }
 
@@ -899,7 +911,7 @@ img { max-width: 100%; display: block; }
   z-index: 40;
   gap: 10px;
   padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
-  background: rgba(249, 250, 236, .93);
+  background: var(--chrome-bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-top: 1px solid var(--line);
@@ -912,7 +924,7 @@ img { max-width: 100%; display: block; }
 /* ============ Footer ============ */
 .site-footer {
   background: var(--dark);
-  color: #cdd3b6;
+  color: var(--footer-ink);
   padding: 34px 0;
   text-align: center;
 }
