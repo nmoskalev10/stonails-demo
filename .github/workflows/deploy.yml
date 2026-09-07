@@ -8,7 +8,7 @@
 #   FTP_HOST      адрес FTP-сервера из панели reg.ru
 #   FTP_USER      логин FTP
 #   FTP_PASSWORD  пароль FTP
-#   FTP_DIR       папка сайта на сервере, например /www/stonails.ru
+#   FTP_DIR       папка сайта на сервере, например /www/site.ru
 
 name: Публикация на хостинг
 
