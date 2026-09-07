@@ -236,6 +236,20 @@
         </div>
 
         <div class="card">
+          <h2>Цвета сайта</h2>
+          <p class="card-note">Выберите набор, нажмите «Сохранить» и откройте сайт — он станет в этих цветах.</p>
+          <div class="themes">
+            ${SITE_THEMES.map((t) => `
+              <button class="theme ${t.id === (state.settings.theme || DEFAULT_THEME) ? "active" : ""}"
+                      type="button" data-act="theme" data-theme="${esc(t.id)}">
+                <span class="theme-dots">${t.swatch.map((c) => `<i style="background:${esc(c)}"></i>`).join("")}</span>
+                <span class="theme-name">${esc(t.name)}</span>
+                <span class="theme-note">${esc(t.note)}</span>
+              </button>`).join("")}
+          </div>
+        </div>
+
+        <div class="card">
           <h2>Куда писать клиентам</h2>
           <div class="row">
             ${field("Номер WhatsApp", "settings.contacts.whatsapp", { hint: "Только цифры, например 79991234567" })}
@@ -554,6 +568,12 @@
     const act = btn.dataset.act;
 
     if (act === "download") return downloadSnapshot();
+
+    if (act === "theme") {
+      state.settings.theme = btn.dataset.theme;
+      markDirty();
+      return renderPanel();
+    }
 
     if (act === "del-avatar") {
       state.about.avatar.image = null;

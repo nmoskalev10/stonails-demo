@@ -1,6 +1,13 @@
 (function () {
   let d = SITE_DATA;
 
+  // Тему подставляем сразу, не дожидаясь загрузки страницы: иначе на миг
+  // мелькнёт палитра по умолчанию, прописанная в css/style.css.
+  function syncTheme() {
+    if (typeof applyTheme === "function") applyTheme(d.settings && d.settings.theme);
+  }
+  syncTheme();
+
   /* ---------- helpers ---------- */
 
   function esc(str) {
@@ -447,6 +454,7 @@
       if (JSON.stringify(fresh.data) === JSON.stringify(d)) return;
 
       d = fresh.data;
+      syncTheme();
       renderAll();
       revealIn(document);
       setupCounters();
@@ -458,7 +466,10 @@
   document.addEventListener("DOMContentLoaded", () => {
     // Последний удачный ответ базы, если он есть, свежее снимка в файле.
     const cache = Store.cached();
-    if (cache && cache.data && cache.data.groups) d = cache.data;
+    if (cache && cache.data && cache.data.groups) {
+      d = cache.data;
+      syncTheme();
+    }
 
     renderAll();
 
