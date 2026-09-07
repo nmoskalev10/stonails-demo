@@ -8,8 +8,8 @@
 
 const Store = (function () {
   const cfg = typeof SUPABASE_CONFIG !== "undefined" ? SUPABASE_CONFIG : { url: "", anonKey: "" };
-  const TOKEN_KEY = "stonails-token";
-  const CACHE_KEY = "stonails-content";
+  const TOKEN_KEY = "site-admin-token";
+  const CACHE_KEY = "site-content";
 
   const configured = Boolean(cfg.url && cfg.anonKey);
 
