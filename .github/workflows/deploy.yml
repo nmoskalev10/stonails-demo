@@ -12,10 +12,13 @@
 
 name: Публикация на хостинг
 
+# Сайт отдаёт GitHub Pages, поэтому автоматически на каждый коммит заливка не
+# нужна — она запускается только вручную, кнопкой Run workflow на вкладке
+# Actions. Если сайт переедет на обычный хостинг, верните сюда push-триггер:
+#   push:
+#     branches: [main]
 on:
-  push:
-    branches: [main]
-  workflow_dispatch:        # и вручную, кнопкой на вкладке Actions
+  workflow_dispatch:
 
 concurrency:
   group: deploy-hosting     # две заливки разом сайту не нужны
@@ -52,6 +55,14 @@ jobs:
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_DIR: ${{ secrets.FTP_DIR }}
         run: |
+          # Значение секрета легко скопировать вместе с переводом строки. Внутри
+          # скрипта lftp он разрывает команду, и заливка падает на пустой строке
+          # с «Ambiguous command». Чистим на входе.
+          FTP_HOST=$(printf %s "$FTP_HOST" | tr -d '\r\n')
+          FTP_USER=$(printf %s "$FTP_USER" | tr -d '\r\n')
+          FTP_DIR=$(printf %s "$FTP_DIR" | tr -d '\r\n')
+          LFTP_PASSWORD=$(printf %s "$LFTP_PASSWORD" | tr -d '\r\n')
+
           lftp --env-password -u "$FTP_USER" "$FTP_HOST" <<EOF
           set ftp:ssl-force true
           set ftp:ssl-protect-data true
