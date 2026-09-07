@@ -66,8 +66,10 @@
 
   function renderAbout() {
     const a = d.about;
+    // В данных лежит имя файла из хранилища, а не готовый адрес — как и у фото
+    // в блоке работ. Без photoUrl браузер искал бы файл в корне сайта.
     const avatar = a.avatar.image
-      ? `<img src="${esc(a.avatar.image)}" alt="">`
+      ? `<img src="${esc(Store.photoUrl(a.avatar.image))}" alt="">`
       : esc(a.avatar.emoji);
 
     document.getElementById("about").innerHTML = `
