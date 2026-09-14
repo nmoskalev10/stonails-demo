@@ -68,6 +68,22 @@
 
 * { box-sizing: border-box; }
 
+/* Мобильные браузеры рисуют поверх нажатой кнопки полупрозрачный синий
+   прямоугольник — он не знает про скругления и выглядит как брак. Гасим его:
+   отклик на нажатие у кнопок и вкладок свой. */
+a, button, .photo-thumb, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Подсветку мыши убрали — но обводка с клавиатуры нужна, иначе по сайту
+   нельзя ходить табом. :focus-visible срабатывает только на клавиатуре. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
@@ -451,7 +467,9 @@ img { max-width: 100%; display: block; }
 /* Panels with crossfade */
 .tab-panel {
   display: none;
-  padding: clamp(48px, 8vw, 76px) 0;
+  /* Сокращённая запись с нулём по бокам перебивала отступы .container, и
+     карточки услуг упирались в края экрана. Держим общий отступ. */
+  padding: clamp(48px, 8vw, 76px) var(--gutter);
 }
 .tab-panel.active {
   display: block;
@@ -945,6 +963,10 @@ img { max-width: 100%; display: block; }
 }
 
 @media (max-width: 720px) {
+  /* На узком экране строки длиннее относительно ширины, и прежних 22px
+     не хватало: текст и карточки упирались в края. */
+  :root { --gutter: 28px; }
+
   .card-grid,
   .testimonial-grid,
   .program-grid { grid-template-columns: 1fr; }
@@ -970,4 +992,8 @@ img { max-width: 100%; display: block; }
 @media (max-width: 420px) {
   .stats { grid-template-columns: repeat(2, 1fr); }
   .cta-row { grid-template-columns: 1fr; }
+
+  /* С увеличенными полями переключателю стало тесно, и длинная подпись
+     вкладки переносилась на вторую строку. */
+  .tab-btn { padding: 12px 6px; font-size: .86rem; }
 }
