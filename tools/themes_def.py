@@ -15,7 +15,7 @@ from gen_themes import build, contrast
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 THEMES = [
- dict(id="dopamine", name="Дофаминовая", note="яркая и жизнерадостная — как сейчас",
+ dict(id="dopamine", name="Дофаминовая", note="яркая и жизнерадостная, много контраста",
       hero="dark", primary="#24b6f0", second="#21c98d", warm="#ffcc33", accent="#ff5fa2",
       primary_deep="#0b7fbd", primary_soft="#e8f7fe", primary_line="#bfe6f8",
       second_deep="#07805a", second_soft="#e6faf1", second_line="#bfead8",
@@ -29,7 +29,7 @@ THEMES = [
       label="linear-gradient(120deg, var(--second-deep), var(--primary-deep))",
       cases="linear-gradient(180deg, var(--primary-soft), var(--second-soft))"),
 
- dict(id="wildflower", name="Полевые цветы", note="пастель, кремовый фон — по подборке Даши",
+ dict(id="wildflower", name="Полевые цветы", note="пастель и кремовый фон, спокойно",
       hero="light", primary="#adbacb", second="#a1ac4e", warm="#eec474", accent="#e5a39d",
       primary_deep="#5e7695", second_deep="#6f7736", warm_deep="#96690f", accent_deep="#c0453a",
       page="#f9faec", line="#e0e4cf", ink="#2f3328", ink_soft="#6d7263",
@@ -56,6 +56,9 @@ THEMES = [
       # сливовая основа держит закатное настроение
       dark="#2a1a20", dark2="#5b3026", hero_ink_soft="#f0d5c0", footer_ink="#d9b9a5",
       glow1="rgba(224, 138, 92, .5)", glow2="rgba(201, 92, 122, .38)"),
+
+ dict(id="spa", name="Эвкалипт и песок", note="природная спа-гамма: зелень, вода и песок",
+      hero="light", primary="#6f9b8b", second="#8fb0c4", warm="#e6cdae", accent="#c98f76"),
 
  dict(id="graphite", name="Графит", note="строгая серо-графитовая с медным акцентом",
       hero="dark", primary="#6b7280", second="#9ca3af", warm="#d4b483", accent="#d97757"),

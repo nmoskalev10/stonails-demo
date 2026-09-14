@@ -1,23 +1,23 @@
 :root {
-  /* Та же дофаминовая палитра, что и на сайте (css/style.css) */
-  --sky: #24b6f0;
-  --sky-deep: #0b7fbd;
-  --sky-soft: #e8f7fe;
-  --mint: #21c98d;
-  --mint-deep: #07805a;
-  --mint-soft: #e6faf1;
-  --sun-soft: #fff6dd;
-  --line: #d7ecf7;
-  --ink: #10222e;
-  --ink-soft: #5b7482;
-  --dark: #08222f;
-  --dark-2: #103c52;
+  /* Та же палитра «Эвкалипт и песок», что и на сайте (css/style.css) */
+  --brand: #6f9b8b;
+  --brand-deep: #567c6e;
+  --brand-soft: #f5f7f6;
+  --second: #8fb0c4;
+  --second-deep: #4e7a95;
+  --second-soft: #f5f6f8;
+  --warm-soft: #f9f6f3;
+  --line: #e3e8e6;
+  --ink: #172b24;
+  --ink-soft: #5e8275;
+  --dark: #0e251d;
+  --dark-2: #1b4636;
   --white: #fff;
-  --bg: #f6fbfe;
+  --bg: #f7faf8;
   --radius: 16px;
   --radius-sm: 10px;
   --font: "Manrope", system-ui, sans-serif;
-  --shadow: 0 10px 30px -20px rgba(16, 60, 82, .55);
+  --shadow: 0 10px 30px -20px rgba(22, 60, 45, .55);
 }
 
 * { box-sizing: border-box; }
@@ -57,18 +57,18 @@ h1, h2, h3 { margin: 0 0 .5em; line-height: 1.25; }
 .btn:hover { transform: translateY(-1px); }
 .btn:disabled { opacity: .5; cursor: default; transform: none; }
 
-.btn-primary { background: linear-gradient(120deg, var(--sky-deep), var(--mint-deep)); color: var(--white); }
+.btn-primary { background: linear-gradient(120deg, var(--brand-deep), var(--second-deep)); color: var(--white); }
 .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
-.btn-ghost:hover { background: var(--sky-soft); }
+.btn-ghost:hover { background: var(--brand-soft); }
 
 .btn-small { padding: 7px 14px; font-size: .8rem; }
 .btn-danger { background: transparent; color: #c0392b; border: 1px solid #f0c8c2; }
 .btn-danger:hover { background: #fdf0ee; }
 
 .btn-add {
-  background: var(--mint-soft);
-  color: var(--mint-deep);
-  border: 1px dashed var(--mint);
+  background: var(--second-soft);
+  color: var(--second-deep);
+  border: 1px dashed var(--second);
   width: 100%;
   margin-top: 10px;
 }
@@ -116,7 +116,7 @@ input[type="text"], input[type="email"], input[type="password"], textarea, selec
 }
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-color: var(--sky);
+  border-color: var(--brand);
   box-shadow: 0 0 0 3px rgba(36, 182, 240, .18);
 }
 textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
@@ -145,7 +145,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
 .topbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
 .status { font-size: .82rem; color: var(--ink-soft); }
-.status.dirty { color: var(--sky-deep); font-weight: 700; }
+.status.dirty { color: var(--brand-deep); font-weight: 700; }
 
 .tabs {
   position: sticky;
@@ -170,8 +170,8 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
   cursor: pointer;
   white-space: nowrap;
 }
-.tab:hover { background: var(--sky-soft); }
-.tab.active { background: linear-gradient(120deg, var(--sky-deep), var(--mint-deep)); color: var(--white); }
+.tab:hover { background: var(--brand-soft); }
+.tab.active { background: linear-gradient(120deg, var(--brand-deep), var(--second-deep)); color: var(--white); }
 
 .panel {
   max-width: 900px;
@@ -219,7 +219,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
   line-height: 1;
   color: var(--ink-soft);
 }
-.icon-btn:hover { background: var(--sky-soft); color: var(--sky-deep); }
+.icon-btn:hover { background: var(--brand-soft); color: var(--brand-deep); }
 .icon-btn.danger:hover { background: #fdf0ee; color: #c0392b; border-color: #f0c8c2; }
 
 /* Строка списка: поле + кнопки */
@@ -238,7 +238,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
   aspect-ratio: 3 / 4;
   border-radius: var(--radius-sm);
   overflow: hidden;
-  background: var(--sky-soft);
+  background: var(--brand-soft);
 }
 .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .photo button {
@@ -265,7 +265,7 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
   font-size: .85rem;
   cursor: pointer;
 }
-.dropzone:hover, .dropzone.over { border-color: var(--sky); background: var(--sky-soft); }
+.dropzone:hover, .dropzone.over { border-color: var(--brand); background: var(--brand-soft); }
 .dropzone input { display: none; }
 
 /* ---------- History ---------- */
@@ -325,9 +325,9 @@ textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
   cursor: pointer;
   transition: border-color .2s, box-shadow .2s;
 }
-.theme:hover { border-color: var(--sky); }
+.theme:hover { border-color: var(--brand); }
 .theme.active {
-  border-color: var(--sky-deep);
+  border-color: var(--brand-deep);
   box-shadow: 0 0 0 2px rgba(36, 182, 240, .25);
 }
 .theme-dots { display: flex; gap: 5px; margin-bottom: 9px; }
