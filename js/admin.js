@@ -70,14 +70,14 @@
     section: () => ({ heading: "Новый раздел", layout: "plain", groups: [{ title: null, items: ["Новый пункт"] }] }),
     course: () => ({
       id: "course-" + Date.now(),
-      title: "Новый курс",
+      title: "Новая услуга",
       meta: [],
       sections: [],
-      ctaText: "Записаться на курс"
+      ctaText: "Записаться"
     }),
     tariff: () => ({
       id: "tariff-" + Date.now(),
-      title: "Новый тариф",
+      title: "Новый вариант",
       badge: "",
       highlight: false,
       meta: [],
@@ -207,12 +207,12 @@
           </div>` : ""}
 
         <div class="field">
-          <label>Короткие подписи (длительность, отработки)</label>
+          <label>Короткие подписи (длительность, формат)</label>
           ${stringList(path + ".meta", "Добавить подпись")}
         </div>
 
         <div class="field">
-          <label>Разделы курса</label>
+          <label>Разделы услуги</label>
           ${(c.sections || []).map((s, si) => sectionEditor(`${path}.sections.${si}`, si, `${path}.sections`)).join("")}
           <button class="btn btn-add btn-small" data-act="add" data-arr="${path}.sections" data-kind="section">+ Добавить раздел</button>
         </div>
@@ -288,7 +288,7 @@
         <div class="card">
           <h2>Фотография или значок</h2>
           <p class="card-note">Можно оставить значок, а можно загрузить фото — оно встанет в кружок.</p>
-          ${field("Значок", "about.avatar.emoji", { hint: "Один символ, например 💅" })}
+          ${field("Значок", "about.avatar.emoji", { hint: "Один символ, например 🌿" })}
           <div class="photos">
             ${a.avatar.image ? `
               <div class="photo">
@@ -358,12 +358,12 @@
                 ${field("Подзаголовок", `${bp}.subtitle`)}
                 ${block[kids].map((c, ci) => courseEditor(`${bp}.${kids}.${ci}`, ci, `${bp}.${kids}`, kids === "tariffs")).join("")}
                 <button class="btn btn-add btn-small" data-act="add" data-arr="${bp}.${kids}" data-kind="${kids === "tariffs" ? "tariff" : "course"}">
-                  + Добавить ${kids === "tariffs" ? "тариф" : "курс"}
+                  + Добавить ${kids === "tariffs" ? "вариант" : "услугу"}
                 </button>
               </div>`;
           }).join("")}
 
-          <button class="btn btn-add" data-act="add" data-arr="groups.${gi}.courses" data-kind="course">+ Добавить отдельный курс</button>
+          <button class="btn btn-add" data-act="add" data-arr="groups.${gi}.courses" data-kind="course">+ Добавить отдельную услугу</button>
         </div>`).join("");
     },
 
@@ -383,7 +383,7 @@
                     <span class="head-title">${esc(t.course)}</span>
                     ${rowActions(`cases.${bi}.items`, ti)}
                   </div>
-                  ${field("Какой курс", `cases.${bi}.items.${ti}.course`)}
+                  ${field("Какая услуга", `cases.${bi}.items.${ti}.course`)}
                   ${field("Текст отзыва", `cases.${bi}.items.${ti}.text`, { multiline: true, rows: 6 })}
                 </div>`).join("")}
               <button class="btn btn-add btn-small" data-act="add" data-arr="cases.${bi}.items" data-kind="testimonial">+ Добавить отзыв</button>
