@@ -231,13 +231,22 @@
         return `
           <div class="cases-block">
             <h2 class="cases-subtitle" data-reveal>${esc(block.title)}</h2>
-            <div class="testimonial-grid">
-              ${block.items.map((t) => `
-                <blockquote class="testimonial-card" data-reveal>
-                  <p>${esc(t.text).replace(/\n/g, "<br>")}</p>
-                  <cite>${esc(t.course)}</cite>
-                </blockquote>
-              `).join("")}
+            <div class="slider" data-slider data-reveal>
+              <button class="slider-arrow slider-prev" type="button" aria-label="Предыдущий отзыв">‹</button>
+              <div class="slider-track" tabindex="0" role="group" aria-label="${esc(block.title)}, лента">
+                ${block.items.map((t) => `
+                  <blockquote class="testimonial-card">
+                    <p>${esc(t.text).replace(/\n/g, "<br>")}</p>
+                    <cite>${esc(t.course)}</cite>
+                  </blockquote>
+                `).join("")}
+              </div>
+              <button class="slider-arrow slider-next" type="button" aria-label="Следующий отзыв">›</button>
+              <div class="slider-dots">
+                ${block.items.map((t, i) => `
+                  <button class="slider-dot" type="button" data-go="${i}" aria-label="Отзыв ${i + 1}"></button>
+                `).join("")}
+              </div>
             </div>
           </div>`;
       }
@@ -417,6 +426,73 @@
     });
   }
 
+  /* ---------- лента отзывов ---------- */
+
+  // Прокрутку делает сам браузер (scroll-snap), здесь только стрелки, точки и
+  // подсветка текущей карточки. Вызывается после каждой отрисовки: renderCases
+  // заменяет разметку целиком, вместе с ней исчезают и слушатели.
+  function setupSliders() {
+    document.querySelectorAll("[data-slider]").forEach((slider) => {
+      const track = slider.querySelector(".slider-track");
+      const cards = Array.from(track.children);
+      const dots = Array.from(slider.querySelectorAll(".slider-dot"));
+      const prev = slider.querySelector(".slider-prev");
+      const next = slider.querySelector(".slider-next");
+      if (!cards.length) return;
+
+      // Карточек может оказаться мало, и лента никуда не едет — тогда
+      // стрелки и точки только мешают.
+      const scrollable = () => track.scrollWidth - track.clientWidth > 2;
+
+      // offsetLeft карточки отсчитывается от рамки ленты, а прокрутка — от
+      // начала содержимого, поэтому всюду вычитаем внутренний отступ.
+      const pad = () => parseFloat(getComputedStyle(track).paddingLeft) || 0;
+
+      function currentIndex() {
+        const left = track.scrollLeft + pad();
+        let best = 0;
+        cards.forEach((c, i) => {
+          if (Math.abs(c.offsetLeft - left) < Math.abs(cards[best].offsetLeft - left)) best = i;
+        });
+        return best;
+      }
+
+      function goTo(i) {
+        const card = cards[Math.max(0, Math.min(i, cards.length - 1))];
+        track.scrollTo({
+          left: card.offsetLeft - pad(),
+          behavior: prefersReducedMotion() ? "auto" : "smooth"
+        });
+      }
+
+      function sync() {
+        slider.classList.toggle("is-static", !scrollable());
+        const atStart = track.scrollLeft <= 2;
+        const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+        // В самом конце последняя карточка так и не встаёт к левому краю —
+        // упирается прокрутка. Точку всё равно зажигаем последнюю.
+        const i = atEnd ? cards.length - 1 : atStart ? 0 : currentIndex();
+        dots.forEach((dot, n) => dot.classList.toggle("is-active", n === i));
+        prev.disabled = atStart;
+        next.disabled = atEnd;
+      }
+
+      prev.addEventListener("click", () => goTo(currentIndex() - 1));
+      next.addEventListener("click", () => goTo(currentIndex() + 1));
+      dots.forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.go))));
+
+      let ticking = false;
+      track.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { ticking = false; sync(); });
+      }, { passive: true });
+
+      window.addEventListener("resize", sync, { passive: true });
+      sync();
+    });
+  }
+
   /* ---------- scroll-driven chrome ---------- */
 
   function setupScrollChrome() {
@@ -441,6 +517,7 @@
     renderGroups();
     renderCases();
     setupTabs();
+    setupSliders();
   }
 
   // Свежий контент из базы. Снимок в data.js уже отрисован, поэтому обновление

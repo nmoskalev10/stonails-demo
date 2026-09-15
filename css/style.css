@@ -123,7 +123,7 @@ img { max-width: 100%; display: block; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html, .slider-track { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: .01ms !important;
     animation-delay: 0s !important;
@@ -777,13 +777,78 @@ img { max-width: 100%; display: block; }
 .photo-thumb:hover img { transform: scale(1.07); }
 
 /* Testimonials — equal-height 2-up */
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+/* Лента отзывов: горизонтальная прокрутка с прилипанием. Листается пальцем,
+   колесом, стрелками и клавишами. Края уходят под общий отступ страницы —
+   так следующая карточка выглядывает из-за края и видно, что лента едет. */
+.slider { position: relative; margin-top: 30px; }
+
+.slider-track {
+  position: relative;
+  display: flex;
   gap: 22px;
-  align-items: stretch;
-  margin-top: 30px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scroll-behavior: smooth;
+  margin-inline: calc(var(--gutter) * -1);
+  padding: 8px var(--gutter) 12px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
+.slider-track::-webkit-scrollbar { display: none; }
+
+.slider-track > .testimonial-card {
+  flex: 0 0 min(420px, 82%);
+  scroll-snap-align: start;
+}
+
+/* Стрелки стоят над лентой справа, а не по бокам: сбоку они налезали на
+   текст карточек, а вынести их за пределы колонки мешает ширина страницы. */
+.slider-arrow {
+  position: absolute;
+  top: -62px;
+  z-index: 2;
+  display: none;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+}
+/* Стрелки нужны там, где нет пальца: на тачскрине лента листается свайпом. */
+@media (hover: hover) and (min-width: 860px) {
+  .slider:not(.is-static) .slider-arrow { display: grid; place-items: center; }
+}
+.slider-arrow:hover { transform: scale(1.06); }
+.slider-arrow[disabled] { opacity: .3; cursor: default; transform: none; }
+.slider-prev { right: 50px; }
+.slider-next { right: 0; }
+
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+.slider.is-static .slider-dots { display: none; }
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--primary-line);
+  cursor: pointer;
+  transition: width .35s var(--ease), background .35s var(--ease);
+}
+.slider-dot.is-active { width: 24px; background: var(--primary-deep); }
 .testimonial-card {
   display: flex;
   flex-direction: column;
@@ -946,7 +1011,6 @@ img { max-width: 100%; display: block; }
 
 @media (max-width: 720px) {
   .card-grid,
-  .testimonial-grid,
   .program-grid { grid-template-columns: 1fr; }
 
   .stats { grid-template-columns: repeat(2, 1fr); }
